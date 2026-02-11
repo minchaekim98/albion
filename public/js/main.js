@@ -16,6 +16,7 @@ function formatNumber(value) {
 let ITEM_DB = null;
 let KO_TO_ID = null;
 let ID_TO_NAME = null;
+const FAVORITES_KEY = 'favorites';
 
 async function loadItemDb() {
     if (ITEM_DB) return ITEM_DB;
@@ -36,6 +37,44 @@ async function loadItemDb() {
 
 function normalize(text) {
     return text.toLowerCase().replace(/\s+/g, '');
+}
+
+function getFavorites() {
+    try {
+        const raw = localStorage.getItem(FAVORITES_KEY);
+        const parsed = raw ? JSON.parse(raw) : [];
+        return Array.isArray(parsed) ? parsed : [];
+    } catch {
+        return [];
+    }
+}
+
+function setFavorites(list) {
+    localStorage.setItem(FAVORITES_KEY, JSON.stringify(list));
+    window.dispatchEvent(new CustomEvent('favorites:changed'));
+}
+
+function isFavorite(itemId) {
+    return getFavorites().includes(itemId);
+}
+
+function toggleFavorite(itemId) {
+    const list = getFavorites();
+    const idx = list.indexOf(itemId);
+    if (idx >= 0) {
+        list.splice(idx, 1);
+    } else {
+        list.unshift(itemId);
+    }
+    setFavorites(list);
+    return list;
+}
+
+function updateFavoriteButton(button, itemId) {
+    const active = isFavorite(itemId);
+    button.dataset.active = active ? 'true' : 'false';
+    button.setAttribute('aria-pressed', active ? 'true' : 'false');
+    button.textContent = active ? '★ 즐겨찾기' : '☆ 즐겨찾기';
 }
 
 async function resolveItem(query) {
@@ -115,8 +154,21 @@ function renderSearchResults(dropdown, results) {
 
         meta.appendChild(name);
         meta.appendChild(id);
+        const fav = document.createElement('button');
+        fav.className = 'favorite-toggle';
+        fav.type = 'button';
+        fav.title = '즐겨찾기';
+        fav.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleFavorite(item.id);
+            fav.dataset.active = isFavorite(item.id) ? 'true' : 'false';
+            window.dispatchEvent(new CustomEvent('favorites:changed'));
+        });
+        fav.dataset.active = isFavorite(item.id) ? 'true' : 'false';
+
         row.appendChild(img);
         row.appendChild(meta);
+        row.appendChild(fav);
         dropdown.appendChild(row);
     });
 
@@ -157,6 +209,7 @@ function initSearchAutocomplete(inputId, dropdownId) {
         const item = e.target.closest('.search-item');
         if (!item) return;
         const id = item.dataset.id;
+        if (e.target.closest('.favorite-toggle')) return;
         window.location.href = `/prices.html?item=${encodeURIComponent(id)}`;
     });
 

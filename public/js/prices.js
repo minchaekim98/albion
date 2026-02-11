@@ -221,6 +221,14 @@ async function initPage() {
   await loadItemDb();
   setItemHeader(itemId);
   initCitySelect();
+  const favButton = document.getElementById('favorite-button');
+  if (favButton) {
+    updateFavoriteButton(favButton, itemId);
+    favButton.addEventListener('click', () => {
+      toggleFavorite(itemId);
+      updateFavoriteButton(favButton, itemId);
+    });
+  }
   historyCitySelect.addEventListener('change', (e) => loadHistory(itemId, e.target.value));
   loadPrices(itemId);
 }

@@ -1,22 +1,18 @@
-﻿const POPULAR_ITEMS = [
-  'T4_BAG', 'T5_BAG', 'T6_BAG',
-  'T4_POTION_HEAL', 'T6_POTION_HEAL',
-  'T4_POTION_ENERGY', 'T6_POTION_ENERGY',
-  'T3_MOUNT_HORSE', 'T5_MOUNT_ARMORED_HORSE', 'T3_MOUNT_OX',
-  'T4_MAIN_SWORD', 'T4_2H_BOW', 'T4_MAIN_FIRESTAFF',
-  'T4_HEAD_PLATE_SET1', 'T4_ARMOR_PLATE_SET1', 'T4_SHOES_PLATE_SET1',
-  'T4_HEAD_LEATHER_SET1', 'T4_ARMOR_LEATHER_SET1',
-  'T4_HEAD_CLOTH_SET1', 'T4_ARMOR_CLOTH_SET1',
-  'T4_CAPEITEM_HERETIC'
-];
-
-async function renderPopularItems() {
+﻿async function renderFavoriteItems() {
   await loadItemDb();
-  const grid = document.getElementById('popular-items');
+  const grid = document.getElementById('favorites-items');
+  const empty = document.getElementById('favorites-empty');
   if (!grid) return;
 
   grid.innerHTML = '';
-  POPULAR_ITEMS.forEach(itemId => {
+  const favorites = getFavorites();
+  if (!favorites.length) {
+    if (empty) empty.style.display = 'block';
+    return;
+  }
+  if (empty) empty.style.display = 'none';
+
+  favorites.forEach(itemId => {
     const name = (ID_TO_NAME && ID_TO_NAME[itemId]) || itemId;
     const card = document.createElement('a');
     card.className = 'item-card';
@@ -36,9 +32,22 @@ async function renderPopularItems() {
     id.className = 'item-card-id';
     id.textContent = itemId;
 
+    const fav = document.createElement('button');
+    fav.className = 'favorite-toggle';
+    fav.type = 'button';
+    fav.title = '즐겨찾기 해제';
+    fav.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      toggleFavorite(itemId);
+      renderFavoriteItems();
+    });
+    fav.dataset.active = 'true';
+
     card.appendChild(img);
     card.appendChild(title);
     card.appendChild(id);
+    card.appendChild(fav);
     grid.appendChild(card);
   });
 }
@@ -47,5 +56,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if (typeof initSearchAutocomplete === 'function') {
     initSearchAutocomplete('hero-search-input', 'hero-search-results');
   }
-  renderPopularItems();
+  renderFavoriteItems();
+  window.addEventListener('favorites:changed', renderFavoriteItems);
 });
