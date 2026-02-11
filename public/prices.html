@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>가격 보기 - 알비온 시세</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="/index.html" class="nav-logo">
+        <span class="logo-icon">A</span>
+        알비온 시세
+      </a>
+      <span class="server-badge">아시아 서버 (East)</span>
+      <div class="nav-links">
+        <a href="/index.html" class="nav-link">홈</a>
+        <a href="/gold.html" class="nav-link">골드 시세</a>
+        <a href="/categories.html" class="nav-link">카테고리</a>
+      </div>
+      <div class="nav-search">
+        <div class="search-wrapper search-wrapper--small">
+          <input type="text" id="nav-search-input" class="search-input search-input--small" placeholder="아이템 검색" autocomplete="off">
+          <div id="nav-search-results" class="search-dropdown"></div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="main-content">
+    <section class="section">
+      <div class="item-header">
+        <img id="item-icon" alt="아이템" class="item-header-icon">
+        <div class="item-header-info">
+          <h1 id="item-name" class="item-header-name">-</h1>
+          <span id="item-id" class="item-header-id">-</span>
+        </div>
+      </div>
+
+      <div id="prices-loading" class="loading">
+        <div class="spinner"></div>
+        <p>시세 정보를 불러오는 중입니다.</p>
+      </div>
+
+      <div id="prices-error" class="error-message" style="display:none;">
+        <p>시세 정보를 불러오지 못했습니다.</p>
+      </div>
+
+      <div id="prices-content" style="display:none;">
+        <h2 class="section-title">도시별 시세</h2>
+        <div class="table-wrapper">
+          <table class="price-table" id="price-table">
+            <thead>
+              <tr>
+                <th>도시</th>
+                <th>판매 최저가</th>
+                <th>판매 시각</th>
+                <th>구매 최고가</th>
+                <th>구매 시각</th>
+              </tr>
+            </thead>
+            <tbody id="price-table-body"></tbody>
+          </table>
+        </div>
+
+        <div class="chart-section">
+          <div class="chart-header">
+            <h2 class="section-title">가격 히스토리</h2>
+            <div class="chart-controls">
+              <label for="history-city">도시:</label>
+              <select id="history-city" class="select-input"></select>
+            </div>
+          </div>
+          <div class="chart-container">
+            <canvas id="history-chart"></canvas>
+            <p id="history-empty" class="empty-message" style="display:none;">가격 히스토리 데이터가 없습니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <p>데이터 출처: Albion Online Data Project</p>
+      <p class="footer-note">이 사이트는 Sandbox Interactive GmbH의 공식 사이트가 아닙니다.</p>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+  <script src="/js/prices.js"></script>
+</body>
+</html>

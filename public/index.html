@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>알비온 시세 - 홈</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="/index.html" class="nav-logo">
+        <span class="logo-icon">A</span>
+        알비온 시세
+      </a>
+      <span class="server-badge">아시아 서버 (East)</span>
+      <div class="nav-links">
+        <a href="/index.html" class="nav-link">홈</a>
+        <a href="/gold.html" class="nav-link">골드 시세</a>
+        <a href="/categories.html" class="nav-link">카테고리</a>
+      </div>
+      <div class="nav-search">
+        <div class="search-wrapper search-wrapper--small">
+          <input type="text" id="nav-search-input" class="search-input search-input--small" placeholder="아이템 검색" autocomplete="off">
+          <div id="nav-search-results" class="search-dropdown"></div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="main-content">
+    <section class="hero">
+      <h1 class="hero-title">알비온 온라인 시세 조회</h1>
+      <p class="hero-subtitle">아이템 이름 또는 ID를 검색해 아시아 서버 기준 시세를 확인하세요.</p>
+      <div class="search-wrapper search-wrapper--large">
+        <input type="text" id="hero-search-input" class="search-input search-input--large"
+               placeholder="아이템 이름 또는 ID 입력" autocomplete="off" autofocus>
+        <div id="hero-search-results" class="search-dropdown search-dropdown--large"></div>
+      </div>
+    </section>
+
+    <section class="quick-links">
+      <a href="/gold.html" class="quick-link-card">
+        <span class="quick-link-icon">G</span>
+        <span class="quick-link-title">골드 시세</span>
+        <span class="quick-link-desc">실시간 골드-실버 환율</span>
+      </a>
+      <a href="/categories.html" class="quick-link-card">
+        <span class="quick-link-icon">C</span>
+        <span class="quick-link-title">카테고리</span>
+        <span class="quick-link-desc">무기, 방어구, 자원, 소모품</span>
+      </a>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">인기 아이템</h2>
+      <div class="item-grid" id="popular-items"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <p>데이터 출처: Albion Online Data Project</p>
+      <p class="footer-note">이 사이트는 Sandbox Interactive GmbH의 공식 사이트가 아닙니다.</p>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+  <script src="/js/index.js"></script>
+</body>
+</html>

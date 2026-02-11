@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>카테고리 - 알비온 시세</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="/index.html" class="nav-logo">
+        <span class="logo-icon">A</span>
+        알비온 시세
+      </a>
+      <span class="server-badge">아시아 서버 (East)</span>
+      <div class="nav-links">
+        <a href="/index.html" class="nav-link">홈</a>
+        <a href="/gold.html" class="nav-link">골드 시세</a>
+        <a href="/categories.html" class="nav-link">카테고리</a>
+      </div>
+      <div class="nav-search">
+        <div class="search-wrapper search-wrapper--small">
+          <input type="text" id="nav-search-input" class="search-input search-input--small" placeholder="아이템 검색" autocomplete="off">
+          <div id="nav-search-results" class="search-dropdown"></div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="main-content">
+    <section class="section">
+      <h1 class="page-title">카테고리</h1>
+
+      <div class="category-grid" id="category-grid"></div>
+
+      <div id="subcategory-panel" class="sub-panel" style="display:none;">
+        <div class="sub-panel-header">
+          <button id="back-to-categories" class="btn-back">← 카테고리로</button>
+          <h2 id="subcategory-title" class="sub-panel-title"></h2>
+        </div>
+        <div class="subcategory-grid" id="subcategory-grid"></div>
+      </div>
+
+      <div id="tier-panel" class="sub-panel" style="display:none;">
+        <div class="sub-panel-header">
+          <button id="back-to-subcategories" class="btn-back">← 하위 분류로</button>
+          <h2 id="tier-title" class="sub-panel-title"></h2>
+        </div>
+        <div class="tier-grid" id="tier-grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <p>데이터 출처: Albion Online Data Project</p>
+      <p class="footer-note">이 사이트는 Sandbox Interactive GmbH의 공식 사이트가 아닙니다.</p>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+  <script src="/js/categories.js"></script>
+</body>
+</html>
