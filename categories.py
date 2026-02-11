@@ -104,7 +104,7 @@ SUBCATEGORIES: dict[str, list[tuple[str, str]]] = {
         ("돌 블록", "STONEBLOCK"),
     ],
     "consumable": [
-        ("체력 포션", "POTION_HEALTH"),
+        ("체력 포션", "POTION_HEAL"),
         ("에너지 포션", "POTION_ENERGY"),
         ("집중 포션", "POTION_FOCUS"),
         ("스튜", "MEAL_STEW"),

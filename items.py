@@ -28,7 +28,7 @@ ALIASES: dict[str, str] = {
     "소": "T3_MOUNT_OX",
     "갑옷말": "T5_MOUNT_ARMORED_HORSE",
     "갑옷 말": "T5_MOUNT_ARMORED_HORSE",
-    "체력포션": "T4_POTION_HEALTH",
+    "체력포션": "T4_POTION_HEAL",
     "에너지포션": "T4_POTION_ENERGY",
     "집중포션": "T4_POTION_FOCUS",
     "헤르틱망토": "T4_CAPEITEM_HERETIC",
