@@ -16,10 +16,17 @@ function formatPrice(value) {
     return formatNumber(value);
 }
 
-function formatDate(value) {
-    if (!value) return '-';
+function parseDate(value) {
+    if (!value) return null;
     const date = new Date(value);
-    if (Number.isNaN(date.getTime())) return '-';
+    if (Number.isNaN(date.getTime())) return null;
+    if (date.getFullYear() <= 1) return null;
+    return date;
+}
+
+function formatDate(value) {
+    const date = parseDate(value);
+    if (!date) return '-';
     return date.toLocaleString('ko-KR');
 }
 
@@ -43,11 +50,37 @@ async function loadPrices() {
     }
 }
 
+function rowScore(row) {
+    const sell = row.sell_price_min || 0;
+    const buy = row.buy_price_max || 0;
+    const priceScore = Math.max(sell, buy);
+    const sellDate = parseDate(row.sell_price_min_date);
+    const buyDate = parseDate(row.buy_price_max_date);
+    const timeScore = Math.max(sellDate ? sellDate.getTime() : 0, buyDate ? buyDate.getTime() : 0);
+    return { priceScore, timeScore };
+}
+
 function renderPriceTable(data) {
     const byCity = {};
     data.forEach(row => {
         const city = row.city || row.location;
-        if (city) byCity[city] = row;
+        if (!city) return;
+
+        const current = byCity[city];
+        if (!current) {
+            byCity[city] = row;
+            return;
+        }
+
+        const a = rowScore(current);
+        const b = rowScore(row);
+        if (b.priceScore > a.priceScore) {
+            byCity[city] = row;
+            return;
+        }
+        if (b.priceScore === a.priceScore && b.timeScore > a.timeScore) {
+            byCity[city] = row;
+        }
     });
 
     tableBody.innerHTML = '';
