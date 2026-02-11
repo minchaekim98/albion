@@ -1,0 +1,69 @@
+﻿{% extends "base.html" %}
+
+{% block title %}골드 시세 - 알비온 시세{% endblock %}
+
+{% block content %}
+<section class="section">
+    <h1 class="page-title">골드 시세</h1>
+
+    <div id="gold-loading" class="loading">
+        <div class="spinner"></div>
+        <p>골드 시세를 불러오는 중입니다.</p>
+    </div>
+
+    <div id="gold-error" class="error-message" style="display:none;">
+        <p>골드 시세를 불러오지 못했습니다.</p>
+    </div>
+
+    <div id="gold-content" style="display:none;">
+        <div class="gold-summary">
+            <div class="gold-price-card">
+                <span class="gold-label">현재 골드 가격</span>
+                <span class="gold-value" id="gold-current">-</span>
+                <span class="gold-unit">실버 / 골드</span>
+            </div>
+            <div class="gold-stats">
+                <div class="gold-stat">
+                    <span class="gold-stat-label">최고가</span>
+                    <span class="gold-stat-value" id="gold-high">-</span>
+                </div>
+                <div class="gold-stat">
+                    <span class="gold-stat-label">최저가</span>
+                    <span class="gold-stat-value" id="gold-low">-</span>
+                </div>
+                <div class="gold-stat">
+                    <span class="gold-stat-label">변동폭</span>
+                    <span class="gold-stat-value" id="gold-change">-</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-section">
+            <div class="chart-header">
+                <h2 class="section-title">가격 추이</h2>
+                <div class="chart-controls">
+                    <label for="gold-range">기간:</label>
+                    <select id="gold-range" class="select-input">
+                        <option value="24">24시간</option>
+                        <option value="72" selected>3일</option>
+                        <option value="168">7일</option>
+                        <option value="720">30일</option>
+                    </select>
+                </div>
+            </div>
+            <div class="chart-container">
+                <canvas id="gold-chart"></canvas>
+                <p id="gold-empty" class="empty-message" style="display:none;">골드 데이터가 없습니다.</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block head %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/gold.js') }}"></script>
+{% endblock %}

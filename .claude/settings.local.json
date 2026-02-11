@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.albion-online-data.com)",
+      "WebSearch",
+      "WebFetch(domain:west.albion-online-data.com)",
+      "Bash(pip install:*)",
+      "Bash(powershell.exe -Command \"python --version\")",
+      "Bash(powershell.exe -Command \"pip install -r ''C:\\\\Users\\\\minchae\\\\OneDrive\\\\Desktop\\\\albion\\\\requirements.txt''\")",
+      "Bash(powershell.exe -Command \"python -m pip install -r ''C:\\\\Users\\\\minchae\\\\OneDrive\\\\Desktop\\\\albion\\\\requirements.txt''\")",
+      "Bash(powershell.exe -Command \"cd ''C:\\\\Users\\\\minchae\\\\OneDrive\\\\Desktop\\\\albion''; python bot.py\")",
+      "Bash(powershell.exe -Command \"python -m pip install matplotlib\")",
+      "Bash(powershell.exe -Command \"Test-Path ''C:\\\\Windows\\\\Fonts\\\\malgun.ttf''\")",
+      "Bash(powershell.exe -Command \"Invoke-WebRequest -Uri ''https://raw.githubusercontent.com/ao-data/ao-bin-dumps/master/items.json'' -OutFile ''C:\\\\Users\\\\minchae\\\\OneDrive\\\\Desktop\\\\albion\\\\items_data.json''\")",
+      "Bash(powershell.exe:*)",
+      "WebFetch(domain:albionfreemarket.com)",
+      "Bash(wc:*)",
+      "Bash(dir:*)",
+      "WebFetch(domain:east.albion-online-data.com)"
+    ]
+  }
+}

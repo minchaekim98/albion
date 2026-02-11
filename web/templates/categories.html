@@ -1,0 +1,114 @@
+﻿{% extends "base.html" %}
+
+{% block title %}카테고리 - 알비온 시세{% endblock %}
+
+{% block content %}
+<section class="section">
+    <h1 class="page-title">카테고리</h1>
+
+    <div class="category-grid" id="category-grid">
+        {% for cat_id, cat_name in categories.items() %}
+        <div class="category-card" data-category="{{ cat_id }}">
+            <span class="category-card-name">{{ cat_name }}</span>
+            <span class="category-card-count">{{ subcategories[cat_id]|length }}개</span>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div id="subcategory-panel" class="sub-panel" style="display:none;">
+        <div class="sub-panel-header">
+            <button id="back-to-categories" class="btn-back">← 카테고리로</button>
+            <h2 id="subcategory-title" class="sub-panel-title"></h2>
+        </div>
+        <div class="subcategory-grid" id="subcategory-grid"></div>
+    </div>
+
+    <div id="tier-panel" class="sub-panel" style="display:none;">
+        <div class="sub-panel-header">
+            <button id="back-to-subcategories" class="btn-back">← 하위 분류로</button>
+            <h2 id="tier-title" class="sub-panel-title"></h2>
+        </div>
+        <div class="tier-grid" id="tier-grid">
+            {% for tier in tiers %}
+            <a class="tier-card" data-tier="{{ tier }}" href="#">
+                <span class="tier-name">{{ tier }}</span>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const SUBCATEGORIES = {{ subcategories | tojson }};
+    const CATEGORIES = {{ categories | tojson }};
+
+    const categoryGrid = document.getElementById('category-grid');
+    const subcategoryPanel = document.getElementById('subcategory-panel');
+    const subcategoryGrid = document.getElementById('subcategory-grid');
+    const subcategoryTitle = document.getElementById('subcategory-title');
+    const tierPanel = document.getElementById('tier-panel');
+    const tierTitle = document.getElementById('tier-title');
+
+    let currentPattern = '';
+
+    categoryGrid.addEventListener('click', function(e) {
+        const card = e.target.closest('.category-card');
+        if (!card) return;
+        const catId = card.dataset.category;
+        const catName = CATEGORIES[catId];
+        showSubcategories(catId, catName);
+    });
+
+    function showSubcategories(catId, catName) {
+        categoryGrid.style.display = 'none';
+        tierPanel.style.display = 'none';
+        subcategoryPanel.style.display = 'block';
+        subcategoryTitle.textContent = catName;
+
+        const subs = SUBCATEGORIES[catId] || [];
+        subcategoryGrid.innerHTML = '';
+        subs.forEach(function(sub) {
+            const name = sub[0];
+            const pattern = sub[1];
+            const div = document.createElement('div');
+            div.className = 'subcategory-card';
+            div.dataset.pattern = pattern;
+            div.textContent = name;
+            subcategoryGrid.appendChild(div);
+        });
+    }
+
+    subcategoryGrid.addEventListener('click', function(e) {
+        const card = e.target.closest('.subcategory-card');
+        if (!card) return;
+        currentPattern = card.dataset.pattern;
+        const name = card.textContent;
+        showTierSelect(name);
+    });
+
+    function showTierSelect(name) {
+        subcategoryPanel.style.display = 'none';
+        tierPanel.style.display = 'block';
+        tierTitle.textContent = name + ' - 티어 선택';
+
+        document.querySelectorAll('#tier-grid .tier-card').forEach(function(card) {
+            const tier = card.dataset.tier;
+            const itemId = tier + '_' + currentPattern;
+            card.href = '/prices/' + itemId;
+        });
+    }
+
+    document.getElementById('back-to-categories').addEventListener('click', function() {
+        subcategoryPanel.style.display = 'none';
+        tierPanel.style.display = 'none';
+        categoryGrid.style.display = 'grid';
+    });
+
+    document.getElementById('back-to-subcategories').addEventListener('click', function() {
+        tierPanel.style.display = 'none';
+        subcategoryPanel.style.display = 'block';
+    });
+</script>
+{% endblock %}

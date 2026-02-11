@@ -1,0 +1,74 @@
+﻿{% extends "base.html" %}
+
+{% block title %}{{ item_name }} - 알비온 시세{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="item-header">
+        <img src="{{ icon_url }}" alt="{{ item_name }}" class="item-header-icon">
+        <div class="item-header-info">
+            <h1 class="item-header-name">{{ item_name }}</h1>
+            <span class="item-header-id">{{ item_id }}</span>
+        </div>
+    </div>
+
+    <div id="prices-loading" class="loading">
+        <div class="spinner"></div>
+        <p>시세 정보를 불러오는 중입니다.</p>
+    </div>
+
+    <div id="prices-error" class="error-message" style="display:none;">
+        <p>시세 정보를 불러오지 못했습니다.</p>
+    </div>
+
+    <div id="prices-content" style="display:none;">
+        <h2 class="section-title">도시별 시세</h2>
+        <div class="table-wrapper">
+            <table class="price-table" id="price-table">
+                <thead>
+                    <tr>
+                        <th>도시</th>
+                        <th>판매 최저가</th>
+                        <th>판매 시각</th>
+                        <th>구매 최고가</th>
+                        <th>구매 시각</th>
+                    </tr>
+                </thead>
+                <tbody id="price-table-body">
+                </tbody>
+            </table>
+        </div>
+
+        <div class="chart-section">
+            <div class="chart-header">
+                <h2 class="section-title">가격 히스토리</h2>
+                <div class="chart-controls">
+                    <label for="history-city">도시:</label>
+                    <select id="history-city" class="select-input">
+                        {% for city in cities %}
+                        <option value="{{ city }}">{{ city_names_kr[city] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="chart-container">
+                <canvas id="history-chart"></canvas>
+                <p id="history-empty" class="empty-message" style="display:none;">가격 히스토리 데이터가 없습니다.</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block head %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const ITEM_ID = "{{ item_id }}";
+    const CITIES = {{ cities | tojson }};
+    const CITY_NAMES_KR = {{ city_names_kr | tojson }};
+</script>
+<script src="{{ url_for('static', filename='js/prices.js') }}"></script>
+{% endblock %}

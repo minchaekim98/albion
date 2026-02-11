@@ -1,0 +1,49 @@
+﻿{% extends "base.html" %}
+
+{% block title %}알비온 시세 - 홈{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <h1 class="hero-title">알비온 온라인 시세 조회</h1>
+    <p class="hero-subtitle">아이템 이름 또는 ID를 검색해 아시아 서버 기준 시세를 확인하세요.</p>
+    <div class="search-wrapper search-wrapper--large">
+        <input type="text" id="hero-search-input" class="search-input search-input--large"
+               placeholder="아이템 이름 또는 ID 입력" autocomplete="off" autofocus>
+        <div id="hero-search-results" class="search-dropdown search-dropdown--large"></div>
+    </div>
+</section>
+
+<section class="quick-links">
+    <a href="/gold" class="quick-link-card">
+        <span class="quick-link-icon">G</span>
+        <span class="quick-link-title">골드 시세</span>
+        <span class="quick-link-desc">실시간 골드-실버 환율</span>
+    </a>
+    <a href="/categories" class="quick-link-card">
+        <span class="quick-link-icon">C</span>
+        <span class="quick-link-title">카테고리</span>
+        <span class="quick-link-desc">무기, 방어구, 자원, 소모품</span>
+    </a>
+</section>
+
+<section class="section">
+    <h2 class="section-title">인기 아이템</h2>
+    <div class="item-grid">
+        {% for item in popular_items %}
+        <a href="/prices/{{ item.id }}" class="item-card">
+            <img src="{{ item.icon }}" alt="{{ item.name }}" class="item-card-icon" loading="lazy">
+            <span class="item-card-name">{{ item.name }}</span>
+            <span class="item-card-id">{{ item.id }}</span>
+        </a>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    if (typeof initSearchAutocomplete === 'function') {
+        initSearchAutocomplete('hero-search-input', 'hero-search-results');
+    }
+</script>
+{% endblock %}
